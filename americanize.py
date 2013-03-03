@@ -1,16 +1,6 @@
 """prototype to see if name converter works well!"""
 
-def get_names():
-    # get names from file
-    name_file = "american_names.txt" # tabulated data
-    male_names = []
-    female_names = []
-    with open(name_file) as f:
-        for line in f:
-            cols = line.split()
-            male_names.append(cols[1])
-            female_names.append(cols[3])
-    return male_names, female_names
+from ssa_data import *
 
 def hamming_distance(sa, sb):
     # hamming distance between two same-length words
@@ -22,7 +12,9 @@ def name_distance(namea, nameb):
     min_len = min(len(namea), len(nameb))
     return hamming_distance(namea[:min_len], nameb[:min_len])
 
-def find_most_similar_names(name, name_list):
-    """Find the most similar name in the name list"""
+def americanize(name, sex):
+    """Find a similar american name"""
+    assert sex in ["male", "female"]
+    name_list = male_names if sex == 'male' else female_names
     sorted_names = sorted(name_list, key=lambda x: name_distance(name, x))
     return sorted_names[:5]

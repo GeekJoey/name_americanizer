@@ -1,0 +1,19 @@
+<html>
+<body>
+  <form action="" method="get">
+    <input type="text" name="name"><br/>
+    <label><input type="radio" name="sex" value="male"/>male</label><br/>
+    <label><input type="radio" name="sex" value="female"/>female</label><br/>
+    <input type="submit" value="submit">
+  </form>
+
+
+  <p>
+  {% if similar_names %}
+  {% for name in similar_names %}
+  <p>{{ name }}</p>
+  {% endfor %}
+  {% endif %}
+  </p>
+</body>
+</html>
