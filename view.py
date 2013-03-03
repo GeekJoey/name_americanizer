@@ -19,7 +19,7 @@ class MainPage(webapp2.RequestHandler):
         # find similar names
         similar_names = []
         if name and sex:
-            similar_names = americanize.americanize(name, sex)
+            similar_names = americanize.americanize(name.lower(), sex)
 
         self.response.write(';'.join(similar_names))
 

@@ -1,0 +1,41 @@
+You are not American and you are tired of spelling your name when ordering pizza?
+Type a name and find yourself an American name!
+
+http://nameamericanizer.appspot.com/
+
+Well, that was the idea.
+
+Most popular names for the last 100 years were used (from
+http://www.ssa.gov/cgi-bin/popularnames.cgi). For the name similarity measure, I
+tried couple of different things, like [[http://en.wikipedia.org/wiki/Levenshtein_distance][edit distance]], [[http://en.wikipedia.org/wiki/Jaro%E2%80%93Winkler_distance][Jaro-Winkler distance]].
+
+This is purely based on string similarity. A much better implementation can be based
+on pronounciation.
+
+For my name "Sefa", the first 10 results are
+
+sean
+sebastian
+seth
+sergio
+silas
+isaiah
+santiago
+steven
+jeffrey
+jeffery
+
+For "Doga", it returns
+
+donna
+morgan
+deja
+deanna
+dana
+diana
+nora
+joanna
+dominique
+diamond
+
+

@@ -41,7 +41,7 @@ def jaro_distance(sa, sb):
         return [char for index, char in enumerate(wa)
                 if char in wb[int(max(0, index-dist)):int(min(index+dist, len(wb)))]]
         
-    max_range = max(len(sa), len(sb)) / 2.0 - 1.0
+    max_range = int(max(len(sa), len(sb)) / 2.0) - 1
     # two chars from sa and sb are considered matching if they are same and
     # not farther than max_range
     commons_a = get_commons(sa, sb, max_range)
@@ -82,10 +82,8 @@ def name_similarity(namea, nameb):
     #return hamming_distance(namea[:min_len], nameb[:min_len])
     #name_sim = 1.0 / levenshtein_distance(namea, nameb)
     name_sim = jaro_winkler_distance(namea, nameb)
-
-    if namea[0] == nameb[0]:
-        name_sim *= 2
-    return name_sim
+    #name_sim = jaro_distance(namea,nameb)
+    return name_sim 
 
 
 def americanize(name, sex):
@@ -95,4 +93,4 @@ def americanize(name, sex):
     # make a list of tuples of name and score.
     name_scores = [(n, name_similarity(name, n)) for n in name_list]
     name_scores.sort(key=lambda x: x[1], reverse=True)
-    return name_scores[:50]
+    return [name for name,score in name_scores[:10]]

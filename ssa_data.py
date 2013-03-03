@@ -18,13 +18,15 @@ def get_all_data():
     key holds the name and the value is count, the popularity of the name"""
     male_names = []
     female_names = []
-    for year in xrange(1985, 2012):
+    for year in xrange(1975, 2012):
         name_data = get_year_data(year)
-        male_data = [name for name,sex,cnt in name_data if sex == 'M']
-        female_data = [name for name,sex,cnt in name_data if sex == 'F']
+        male_data = [name.lower() for name,sex,cnt in name_data if sex == 'M']
+        female_data = [name.lower() for name,sex,cnt in name_data if sex == 'F']
         male_names += male_data[:200]
         female_names += female_data[:200]
         
     return list(set(male_names)), list(set(female_names))
 
 male_names, female_names = get_all_data()
+
+
