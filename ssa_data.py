@@ -8,7 +8,6 @@ ssa_data_dir = "ssa_data"
 
 def get_year_data(year):
     """Get name data belonging to specific year"""
-    print "getting year", year
     data_file = os.path.join(ssa_data_dir, "yob%d.txt" % year)
     with open(data_file, 'rU') as f:
         name_data = [line.strip().split(',') for line in f]

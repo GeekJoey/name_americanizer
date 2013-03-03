@@ -1,19 +1,151 @@
+<!DOCTYPE HTML>
 <html>
+<head>
+    <link rel="stylesheet" href="css/bootstrap.css">
+    <link rel="stylesheet" href="css/bootstrap-responsive.css">
+    <style>
+    body {
+        padding-top: 60px;
+    }
+    input.input-block {
+        font-size: 200%;
+        height:100%;
+        width: 100%;
+        padding: 15px;
+    }
+    .btn-huge {
+        font-size: 200%;
+        height:100%;
+        padding: 15px;
+    }
+    .btn-boy{
+        color: #000;
+        text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.25);
+        background-color: #c1e3ee;
+        *background-color: #98d3e4;
+        background-image: -moz-linear-gradient(top, #dbf1f8, #98d3e4);
+        background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#dbf1f8), to(#98d3e4));
+        background-image: -webkit-linear-gradient(top, #dbf1f8, #98d3e4);
+        background-image: -o-linear-gradient(top, #dbf1f8, #98d3e4);
+        background-image: linear-gradient(to bottom, #dbf1f8, #98d3e4);
+        background-repeat: repeat-x;
+        border-color: #98d3e4 #98d3e4 #5bb8d4;
+        border-color: rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.25);
+        filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ff5bc0de', endColorstr='#ff2f96b4', GradientType=0);
+        filter: progid:DXImageTransform.Microsoft.gradient(enabled=false);
+    }
+
+    .btn-boy:hover,
+    .btn-boy:focus,
+    .btn-boy:active,
+    .btn-boy.active,
+    .btn-boy.disabled,
+    .btn-boy[disabled] {
+      color: #ffffff;
+      background-color: #98d3e4;
+      *background-color: #85cadf;
+    }
+
+    .btn-boy:active,
+    .btn-boy.active {
+      background-color: #70c1da;
+    }
+    .btn-girl{
+        color: #000;
+        text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.25);
+        background-color: #eec1cd;
+        *background-color: #e498ad;
+        background-image: -moz-linear-gradient(top, #f8dbe3, #e498ad);
+        background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#f8dbe3), to(#e498ad));
+        background-image: -webkit-linear-gradient(top, #f8dbe3, #e498ad);
+        background-image: -o-linear-gradient(top, #f8dbe3, #e498ad);
+        background-image: linear-gradient(to bottom, #f8dbe3, #e498ad);
+        background-repeat: repeat-x;
+        border-color: #e498ad #e498ad #d45b7c;
+        border-color: rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.25);
+        filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ff5bc0de', endColorstr='#ff2f96b4', GradientType=0);
+        filter: progid:DXImageTransform.Microsoft.gradient(enabled=false);
+    }
+    .btn-girl:hover,
+    .btn-girl:focus,
+    .btn-girl:active,
+    .btn-girl.active,
+    .btn-girl.disabled,
+    .btn-girl[disabled] {
+      color: #ffffff;
+      background-color: #e498ad;
+      *background-color: #df859d;
+    }
+
+    .btn-girl:active,
+    .btn-girl.active {
+      background-color: #da708c;
+    }
+    .table-result {
+        font-size: 1.1em;
+        /* height: 200px;
+        overflow: auto; */
+        -webkit-border-radius: 5px;
+        -moz-border-radius: 5px;
+        border-radius: 5px;
+    }
+    </style>
+</head>
 <body>
-  <form action="" method="get">
-    <input type="text" name="name"><br/>
-    <label><input type="radio" name="sex" value="male"/>male</label><br/>
-    <label><input type="radio" name="sex" value="female"/>female</label><br/>
-    <input type="submit" value="submit">
-  </form>
+
+<section>
+    <div class="row">
+        <div class="span4"></div>
+        <div class="span4"> 
+            <h1>Name Americanizer</h1>
+            <p>Choose a gender, type your name and find a match!
+            <div class="input-prepend input-append">
+                <div class="btn-group">
+                    <div data-toggle="buttons-radio" style="display: inline-block;" required>
+                        <button class="btn  btn-boy">&#9794;</button>
+                        <button class="btn btn-girl">&#9792;</button>
+                    </div> 
+                    <input type="text" class="name" required></input>
+                    <button class="f btn"><i class="icon-search"></i></button>  
+                </div>
+            </div>
+
+            <table class="table table-striped table-condensed">
+                <tbody class="result">
+                </tbody>
+            </table>
+        </div>
+        <div class="span4"></div>
+    </div>
+</div>
+</section>
 
 
-  <p>
-  {% if similar_names %}
-  {% for name in similar_names %}
-  <p>{{ name }}</p>
-  {% endfor %}
-  {% endif %}
-  </p>
+<script src="http://code.jquery.com/jquery.js"></script>
+<script src="js/bootstrap.js"></script>     
+<script>
+    $('.f').click(
+        function(){
+            var n = $('.name').val();
+            var s = '';
+            if($('.btn-girl').hasClass('active'))
+                s = 'female'
+            if($('.btn-boy').hasClass('active'))
+                s = 'male'
+
+            var posting = $.post('/', {name:n, sex:s});
+            posting.done( function(data) {
+                $('.result').empty();
+                var list = data.split(';');
+                for (var i = 0; i < list.length ; i++) {
+                    $('.result').append($('<tr><td>'+list[i]+'</td></tr>'));
+                };
+            });
+                
+    });
+</script>
+
+</body>
+</html>
 </body>
 </html>
