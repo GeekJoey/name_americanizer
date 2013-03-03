@@ -9,6 +9,9 @@ jinja_env = jinja2.Environment(
 class MainPage(webapp2.RequestHandler):
     def get(self):
         template = jinja_env.get_template('index.html')
+        self.response.write(template.render()))
+
+    def post(self):
         # get name to be translated
         name = self.request.get("name")
         sex = self.request.get("sex")
@@ -18,10 +21,6 @@ class MainPage(webapp2.RequestHandler):
         if name and sex:
             similar_names = americanize.americanize(name, sex)
 
-        # render template
-        template_values = {
-            'similar_names': similar_names,
-        }
-        self.response.write(template.render(template_values))
+        self.response.write(';'.join(similar_names))
 
 app = webapp2.WSGIApplication([('/', MainPage)], debug=True)
