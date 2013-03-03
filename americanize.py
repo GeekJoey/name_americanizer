@@ -35,16 +35,53 @@ def levenshtein_distance(sa, sb, gap_penalty=1):
         previous_row = current_row
     return previous_row[-1]
 
+def jaro_distance(sa, sb):
+    """Jaro distance between two strings"""
+    def get_commons(wa, wb, dist):
+        return [char for index, char in enumerate(wa)
+                if char in wb[int(max(0, index-dist)):int(min(index+dist, len(wb)))]]
+        
+    max_range = max(len(sa), len(sb)) / 2.0 - 1.0
+    # two chars from sa and sb are considered matching if they are same and
+    # not farther than max_range
+    commons_a = get_commons(sa, sb, max_range)
+    commons_b = get_commons(sb, sa, max_range)
+    len_a = float(len(commons_a))
+    len_b = float(len(commons_b))
+
+    if len_a == 0 or len_b == 0:
+        return 0
+
+    num_transpositions = sum(ca != cb for ca,cb in zip(commons_a, commons_b)) / 2.0
+    return (len_a/ len(sa) +
+            len_b / len(sb) +
+            (len_a - num_transpositions) / len_a) / 3.0
+
     
-    
+def jaro_winkler_distance(sa, sb, prefix_scale=0.1):
+    """Jaro-winkler distance for short strings such as person names.
+    http://en.wikipedia.org/wiki/Jaro%E2%80%93Winkler_distance
+    """
+    def get_prefix(max_prefix=4):
+        # length of common prefix up to maximum of 4 characters
+        length = min(len(sa), len(sb), max_prefix)
+        for i in range(0, length):
+            if sa[i] != sb[i]:
+                return i
+        return length
+
+    jd = jaro_distance(sa, sb)
+    prefix = get_prefix()
+    return jd + (prefix * prefix_scale * (1 - jd))
+
+
 def name_similarity(namea, nameb):
     # dummy name similarity measure function for now
     # hamming distance
     #min_len = min(len(namea), len(nameb))
     #return hamming_distance(namea[:min_len], nameb[:min_len])
-    name_sim = 1.0 / levenshtein_distance(namea, nameb)
-    # use nameb_popularity for scoring
-    #name_sim *= math.sqrt(nameb_pop)
+    #name_sim = 1.0 / levenshtein_distance(namea, nameb)
+    name_sim = jaro_winkler_distance(namea, nameb)
 
     if namea[0] == nameb[0]:
         name_sim *= 2

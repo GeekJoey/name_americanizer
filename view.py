@@ -9,7 +9,7 @@ jinja_env = jinja2.Environment(
 class MainPage(webapp2.RequestHandler):
     def get(self):
         template = jinja_env.get_template('index.html')
-        self.response.write(template.render()))
+        self.response.write(template.render())
 
     def post(self):
         # get name to be translated
