@@ -3,7 +3,7 @@ Type a name and find yourself an American name!
 
 http://nameamericanizer.appspot.com/
 
-Well, that was the idea.
+I can't say it worked really well, but it was fun.
 
 Most popular names for the last 100 years were used (from
 http://www.ssa.gov/cgi-bin/popularnames.cgi). For the name similarity measure, I
@@ -11,6 +11,8 @@ tried couple of different things, like [[http://en.wikipedia.org/wiki/Levenshtei
 
 This is purely based on string similarity. A much better implementation can be based
 on pronounciation.
+
+Thanks to Doga for html/css/js part.
 
 For my name "Sefa", the first 10 results are
 
